@@ -1,0 +1,10 @@
+[
+ {
+  "directory": "/home/splitsky/Desktop/code_repositories/OOP_C_2/Assignment_1",
+  "arguments": [
+   "g++",
+   "main.cpp"
+  ],
+  "file": "main.cpp"
+ }
+]

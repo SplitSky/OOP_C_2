@@ -36,7 +36,7 @@ int main(){
             std::cin >> Z;
         }
 
-        std::cout << "Enter first quantum number: " << std::endl;
+        std::cout << "Enter the first quantum number n: " << std::endl;
         std::cin >> n_1;
 
         while (std::cin.fail() || n_1 <= 0) {
@@ -64,8 +64,6 @@ int main(){
             std::cin.ignore();
             std::cin >> choice;
         }
-
-
 
         if (choice == 'J') {
             E = calculate_Energy(n_1, n_2, false, Z);

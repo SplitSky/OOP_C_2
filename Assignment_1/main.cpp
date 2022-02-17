@@ -18,8 +18,8 @@ int main(){
     // delcare variables
 
     int Z{0};
-    int n_1{0};
-    int n_2{0};
+    int number_1{0};
+    int number_2{0};
     double E{0};
     bool interrupt_bool{false};
     char choice{};
@@ -37,22 +37,22 @@ int main(){
         }
 
         std::cout << "Enter the first quantum number n: " << std::endl;
-        std::cin >> n_1;
+        std::cin >> number_1;
 
-        while (std::cin.fail() || n_1 <= 0) {
+        while (std::cin.fail() || number_1 <= 0) {
             std::cout << "The number is incorrect. Try again: ";
             std::cin.clear();
             std::cin.ignore();
-            std::cin >> n_1;
+            std::cin >> number_1;
         }
 
         std::cout << "Enter the second quantum number n: " << std::endl;
-        std::cin >> n_2;
-        while (std::cin.fail() || n_1 < n_2) {
+        std::cin >> number_2;
+        while (std::cin.fail() || number_1 < number_2) {
             std::cout << "The number is incorrect. Try again: ";
             std::cin.clear();
             std::cin.ignore();
-            std::cin >> n_2;
+            std::cin >> number_2;
         }
 
         // compute photon energy
@@ -66,10 +66,10 @@ int main(){
         }
 
         if (choice == 'J') {
-            E = calculate_Energy(n_1, n_2, false, Z);
+            E = calculate_Energy(number_1, number_2, false, Z);
             std::cout << "The energy is: " << std::setprecision(3) << E << " Joules" << std::endl;
         } else {
-            E = calculate_Energy(n_1, n_2, true, Z);
+            E = calculate_Energy(number_1, number_2, true, Z);
             std::cout << "The energy is: " << std::setprecision(3) << E << " eV" << std::endl;
         }
 

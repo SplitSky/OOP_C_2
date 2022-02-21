@@ -11,36 +11,30 @@
 #include<string>
 
 // Functions
-double splicing(std::string long_string, int first_index, int last_index) {
-    std::string word{};
-    char temp_array[20];
-    for (int i = first_index; i <= last_index ;i++) {
-        word = word + long_string[i];
+int caclculate_file_length(std::fstream file) {
+    std::string file_line;
+    int N{0};
+    if (!file.good()) {
+        std::cout << "The file couldn't be loaded";
+        return -1;
+    } else {
+        while (!file.eof()) {
+            getline(file,file_line); // function loading line into string
+            if (file_line.length()!=0) {
+                N++;
+            }
+        }
     }
-    double number = std::stod(word);
-    return number;
+    file.close();
+    return N;
 }
 
 // Main function
 
 int main() {
     // declare variables
-    int N{0};
-    std::string file_line;
-    std::fstream my_file("courselist.dat");
-
-    if (!my_file.good()) {
-        std::cout << "The file couldn't be loaded";
-        return -1;
-    } else {
-	while(!my_file.eof()) {
-	    getline(my_file,file_line);
-            if(file_line.length()!=0) {
-                N++;
-            }
-	}
-	my_file.close();		
-    }
+    std::fstream file("courselist.dat");
+    int N = calculate_file_length(file);
 
     std::ifstream my_file2("courselist.dat");
     std::string *data_array{new std::string[N]};

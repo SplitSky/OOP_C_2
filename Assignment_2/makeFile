@@ -1,0 +1,5 @@
+main:
+        g++ -g main.cpp
+
+main2:
+        g++ -g main2.cpp

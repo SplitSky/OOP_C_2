@@ -33,11 +33,28 @@ int calculate_file_length(std::string file_name) {
 double splicing(std::string long_string, int first_index, int last_index) {
     std::string word{};
     char temp_arrayc[20];
-    for (int i= first_index; i <= last_index; i++) {
+    for (int i=first_index; i <= last_index; i++) {
         word = word + long_string[i];
     }
     double number = std::stod(word);
     return number;
+}
+
+double calculate_mean(float *scores, int N) {
+    double sum{0};
+    for (size_t i{0}; i<N; i++) {
+        sum += scores[i];
+    }
+    return sum/static_cast<double>(N);
+}
+
+double calculate_std(float *scores, int mean, int N) {
+    double sum{0};
+    for (size_t i{0}; i<N; i++) {
+        std::cout << "std:" << scores[i] << std::endl;
+        sum = sum + pow(scores[i] - mean,2);
+    }
+    return pow(1/(static_cast<double>(N)-1) * sum, 0.5);
 }
 
 // Main function
@@ -67,12 +84,21 @@ int main() {
     for(int i{0}; i < N; i++) {
         sum = sum + pow(scores[i] - mean,2);
     }
-    standard_deviation = pow(1/(N_2) * sum ,0.5);
+    standard_deviation = pow(1/(static_cast<double>(N)-1) * sum ,0.5);
+    //mean = calculate_mean(scores, N);
+    //standard_deviation = calculate_std(scores, mean, N);
+
     standard_deviation_error = standard_deviation/pow(N_2,0.5);
     delete[] data_array;
     std::cout << "The mean is: " << mean << std::endl;
     std::cout << "The standard deviation: " << standard_deviation << std::endl;
     std::cout << "The standard deviation error: " << standard_deviation_error << std::endl;
-
+    std::cout << "gap" << std::endl;
+    double mean2 = calculate_mean(scores, N);
+    double std2 = calculate_std(scores, mean, N);
+    double std_err = std2/pow(N_2,0.5);
+    std::cout << "mean 2.0: " << mean2 << std::endl;
+    std::cout << "std 2.0: " << std2 << std::endl;
+    std::cout << "error: " << std_err << std::endl;
     return 0;    
 }

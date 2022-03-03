@@ -60,15 +60,6 @@ double calculate_standard_deviation(std::vector<list_node> data_array, double me
     return pow(1/static_cast<double>(N) * sum, 0.5);
 }
 
-double splicing(std::string long_string, int first_index, int last_index) {
-    // slices the numerical value from a string and returns a double
-    std::string word{};
-    for (int i= first_index; i <= last_index; i++) {
-        word = word + long_string[i];
-    }
-    double number = std::stod(word);
-    return number;
-}
 
 void bubble_sort(std::vector<list_node>& array, int type) {
     // sorting function

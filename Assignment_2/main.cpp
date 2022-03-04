@@ -1,9 +1,8 @@
 // PHYS 30762 Programming in C++
-// Assignment 2
+// Assignment 2 - part 1
 // Tomasz Neska 17/02/2022
 
 // Program to compute mean, standard deviation and standard
-// error of the a set of courses. Data is read from file
 #include<iostream>
 #include<iomanip>
 #include<fstream>
@@ -51,7 +50,6 @@ double calculate_mean(float *scores, int N) {
 double calculate_std(float *scores, int mean, int N) {
     double sum{0};
     for (size_t i{0}; i<N; i++) {
-        std::cout << "std:" << scores[i] << std::endl;
         sum = sum + pow(scores[i] - mean,2);
     }
     return pow(1/(static_cast<double>(N)-1) * sum, 0.5);
@@ -75,30 +73,13 @@ int main() {
         getline(my_file2, file_line);
         data_array[i] = file_line;
         scores[i] = splicing(file_line,0,3);
-        sum = sum + scores[i];
     }
-    // casting an int into a double for increased precision
-    double N_2 = static_cast<double>(N);
-    mean = 1/N_2 * sum;
-    sum = 0;
-    for(int i{0}; i < N; i++) {
-        sum = sum + pow(scores[i] - mean,2);
-    }
-    standard_deviation = pow(1/(static_cast<double>(N)-1) * sum ,0.5);
-    //mean = calculate_mean(scores, N);
-    //standard_deviation = calculate_std(scores, mean, N);
-
-    standard_deviation_error = standard_deviation/pow(N_2,0.5);
-    delete[] data_array;
+    mean = calculate_mean(scores, N);
+    standard_deviation = calculate_std(scores,mean,N);
+    standard_deviation_error = standard_deviation/pow(N,0.5);
+    delete[] data_array; // freeing memor // freeing memoryy
     std::cout << "The mean is: " << mean << std::endl;
     std::cout << "The standard deviation: " << standard_deviation << std::endl;
     std::cout << "The standard deviation error: " << standard_deviation_error << std::endl;
-    std::cout << "gap" << std::endl;
-    double mean2 = calculate_mean(scores, N);
-    double std2 = calculate_std(scores, mean, N);
-    double std_err = std2/pow(N_2,0.5);
-    std::cout << "mean 2.0: " << mean2 << std::endl;
-    std::cout << "std 2.0: " << std2 << std::endl;
-    std::cout << "error: " << std_err << std::endl;
-    return 0;    
+    return 0; 
 }

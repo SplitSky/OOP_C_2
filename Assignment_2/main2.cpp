@@ -20,7 +20,6 @@ struct list_node {
     int unit_code;
     std::string title;
 };
-
 // Functions
 
 int calculate_file_length(std::string file_name) {
@@ -114,14 +113,13 @@ int main() {
     void bubble_sort(std::vector<list_node>& array, int type);
     int calculate_file_length(std::string file_name);
     // declare variables
-    int number_courses{0};
     std::string file_name = "courselist.dat";
     int N{0};
     double standard_deviation{};
     double mean{};
-    double std_error{};
     double sum{0};
     std::string file_line;
+    double std_error{};
     list_node temporary_node;
     std::vector<list_node> sliced_data;
     std::vector<std::string> full_data;
@@ -155,7 +153,7 @@ int main() {
     // 4. calculate mean, std of the full set
     mean = calculate_mean(sliced_data);
     standard_deviation = calculate_standard_deviation(sliced_data, mean);
-    std_error = standard_deviation/(pow(static_cast<double>(number_courses),0.5)); 
+    std_error = standard_deviation/(pow(static_cast<double>(N),0.5)); 
     std::cout << "The mean for the file is: " << mean << std::endl;
     std::cout << "The standard deviation is: " << standard_deviation << "+/- " << std_error << std::endl;
 
@@ -167,7 +165,7 @@ int main() {
     std::cout << "Enter the year you want to display: ";
     int year{0};
     std::cin >> year;
-    while (std::cin.fail()) {
+    while (std::cin.fail() || year > 4 || year < 1) {
         std::cout << "The year is incorrect. Try again: ";
         std::cin.clear();
         std::cin.ignore(1000,'\n');
@@ -185,7 +183,7 @@ int main() {
     }
     mean = calculate_mean(chosen_data);
     standard_deviation = calculate_standard_deviation(chosen_data, mean);
-    std_error = standard_deviation/(pow(static_cast<double>(number_courses),0.5));
+    std_error = standard_deviation/(pow(static_cast<double>(N),0.5));
 
     bubble_sort(chosen_data, choice); // passed by reference
     

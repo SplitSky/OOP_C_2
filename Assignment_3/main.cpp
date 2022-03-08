@@ -66,9 +66,10 @@ int main() {
     double redshift = 2; // range 0-10
     double total_mass = 10e8; // 10^7 - 10^12
     double stellar_mass_fraction = 0.025; // 0 - 0.05
-    
+    std::vector<galaxy> all_galaxies; 
     // Example using default constructor
     galaxy g1; 
+    all_galaxies.push_back(g1);
 
     // Example using parameterised constructor
     galaxy g2(redshift,total_mass,stellar_mass_fraction,hubble_type);
@@ -82,6 +83,8 @@ int main() {
     g2.add_satellite(g1);
     // Print out the data again with satellite
     g2.print_data();
+    
+    all_galaxies.push_back(g2);
 
     hubble_type = "E0"; //E0, E7, S0, Sa, Sb, Sc, SBa, SBb, SBc, Irr
     redshift = 5; // range 0-10
@@ -90,11 +93,16 @@ int main() {
 
     galaxy g3(redshift, total_mass, stellar_mass_fraction, hubble_type);
     
+    all_galaxies.push_back(g3);
+
     galaxy g4;
     galaxy g5;
     g3.add_satellite(g4);
     g3.add_satellite(g5);
-    g3.print_data();
+    //g3.print_data();
+
+    all_galaxies.push_back(g4);
+    all_galaxies.push_back(g5);
 
 
 

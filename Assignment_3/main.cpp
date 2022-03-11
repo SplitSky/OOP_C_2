@@ -18,11 +18,16 @@ private:
 
 public:
     // Constructors
-    galaxy() = default;
+    galaxy() {
+        redshift = 0;
+        total_mass = 0;
+        stellar_mass_fraction = 0;
+        hubble_type = "Default";
+    };
     // Parameter Constructor
     galaxy(double redshift, double total_mass, double stellar_mass_fraction, std::string hubble_type) : redshift{redshift}, total_mass{total_mass}, stellar_mass_fraction{stellar_mass_fraction}, hubble_type{hubble_type} {}
     // Deconstructor
-    ~galaxy(){std::cout << "Destroying Galaxy" << std::endl;}
+    ~galaxy(){};
     // Return stellar mass (M_* = f_* x M_tot)
     double stellar_mass() {return stellar_mass_fraction * total_mass;}
     // Change galaxy's Hubble type
@@ -44,6 +49,7 @@ void galaxy::print_data() {
     std::cout << "The stellar mass fraction is: " << this->stellar_mass_fraction << std::endl;
     std::cout << "The number of satellites is: " << this->satellites.size() << std::endl;
     if(this->satellites.size() > 0) {
+        std::cout << ""<< std::endl;
         // define an iterator
         int i{1};
         std::vector<galaxy>::iterator vector_begin{this->satellites.begin()};
@@ -57,6 +63,8 @@ void galaxy::print_data() {
         }
         std::cout << std::endl; // a line break ofr better readibiltiy
     }
+
+    std::cout << std::endl;
 }
 // End of class and associated member functions
 
@@ -70,6 +78,8 @@ int main() {
     // Example using default constructor
     galaxy g1; 
     all_galaxies.push_back(g1);
+
+    std::cout << "Verifying assignment functions working" << std::endl;
 
     // Example using parameterised constructor
     galaxy g2(redshift,total_mass,stellar_mass_fraction,hubble_type);
@@ -92,17 +102,27 @@ int main() {
     stellar_mass_fraction = 0.03; // 0 - 0.05 
 
     galaxy g3(redshift, total_mass, stellar_mass_fraction, hubble_type);
-    
-    all_galaxies.push_back(g3);
 
     galaxy g4;
     galaxy g5;
     g3.add_satellite(g4);
     g3.add_satellite(g5);
     //g3.print_data();
-
+    
+    all_galaxies.push_back(g3);
     all_galaxies.push_back(g4);
     all_galaxies.push_back(g5);
+
+    std::cout << "Accessing class variables using iterator" << std::endl;
+
+    // use of iterator to access the data
+    std::vector<galaxy>::iterator vector_begin{all_galaxies.begin()};
+    std::vector<galaxy>::iterator vector_end{all_galaxies.end()};
+    std::vector<galaxy>::iterator vector_iterator;
+    for (vector_iterator=vector_begin; vector_iterator<vector_end; ++vector_iterator) {
+        std::cout << "Printing the data for a galaxy" << std::endl;
+        vector_iterator->print_data();
+    }
 
 
 

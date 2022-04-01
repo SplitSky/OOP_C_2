@@ -53,27 +53,6 @@ class matrix {
             return this->calc_det(row, temp_vector);
         }
 
-        void slice_matrix2(int i_pivot, int j_pivot) {
-            std::vector<double> new_data;
-            for (size_t i{0}; i<row*col; i++) {
-                new_data.push_back(data[i]);
-            }
-
-            row = row-1;
-            col = col-1;
-            delete[] this->data;
-            this->data = new double[row*col];
-            // purges and resets the data variables
-            new_data = this->splice_matrix(i_pivot, j_pivot, new_data);
-            std::copy(new_data.begin(), new_data.end(), this->data);
-            matrix temp;
-            double* data_assigned = new double[row*col];
-            std::copy(new_data.begin(), new_data.end(), data_assigned);
-            this->set_data(data_assigned, new_data.size());
-            delete[] data_assigned;
-
-        }
-        
         double calc_det(int row, std::vector<double> matrix) {
             if (row == 2) {
                 return matrix[0]*matrix[3] - matrix[1]*matrix[2];
@@ -235,15 +214,6 @@ matrix & matrix::operator=(matrix& numbers) { // deep copy
     return *this;
 }
 
-//matrix & matrix::operator=(matrix &&numbers) { // move assignment operator
-//    if (&numbers == this) {return *this;} // avoids self assignment
-//    std::cout << "move assignment\n";
-//    std::swap(col, numbers.col);
-//    std::swap(row, numbers.row);
-//    std::swap(data, numbers.data);
-//    return *this;
-//}
-
 std::string matrix::show_data() const {
     std::string temp[this->row];
     std::string temp_string;
@@ -324,7 +294,6 @@ std::istream& operator>>(std::istream& os, matrix &numbers) {
     double* new_data = new double[data.size()];
     std::copy(data.begin(), data.end(), new_data); 
     // copies the array into a memory location that doesn't disappear when it goes out of scope.
-    
     // convert a vector into double array
     numbers.set_data(&new_data[0],data.size()); // assigns the data onto the matrix
     return os;
@@ -375,9 +344,9 @@ int main() {
     std::cout << "Det of B: " << det_b << std::endl; 
     
     // 4. Input testing
-    //matrix matrix9;
-    //std::cin >> matrix9; // the input testing
-    //std::cout << "the input matrix: " << matrix9 << std::endl;
+    matrix matrix9;
+    std::cin >> matrix9; // the input testing
+    std::cout << "the input matrix: " << matrix9 << std::endl;
 
     // 5. Showing that the copy and move constructors work.    
     A = B; // modifies the original matrix
@@ -389,17 +358,12 @@ int main() {
     std::cout << "matrix A: " << A << std::endl;
 
     // 6. Demonstrating the use of the move constructor.
+    std::cout << "Calling move constructor" << std::endl;
     matrix result_6{std::move(A)};
-
-    // 7. the demonstration of the "member function that returns a matrix with ith and jth row deleted"
-    // is a part of the determinant calculation
-    // This function is modified and repeated under a name slice_matrix2.
-    // Operation is demonstrated below
-    double data_6[36] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36};
-    matrix matrix6(6,6,data_6);
-    matrix6.slice_matrix2(1,1);
-    std::cout << "Slice the 6x6 matrix by removing 1st column and 1st row." << std::endl;
-    std::cout << "Printing the sliced matrix: "<< matrix6 << std::endl;
+    std::cout << "Printing moved matrix:" << std::endl;
+    std::cout << result_6 << std::endl;
+    std::cout << "Printing original matrix:" << std::endl;
+    std::cout << A << std::endl;
 
     return 0;
 }  

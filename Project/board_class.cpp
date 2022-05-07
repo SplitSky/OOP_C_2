@@ -460,7 +460,6 @@ void board::play_AI_turn(int player, bool check) {
     std::string ai_move;
     std::vector<std::string> possible_moves;
     find_all_moves(player);
-    
     int score;
     int piece_index;
     piece* current_piece;
@@ -480,6 +479,7 @@ void board::play_AI_turn(int player, bool check) {
             piece_index = king_index;
         }
     } else {
+        // the king is safe, choosing offensive moves
         for (size_t i{0}; i<pieces_array.size(); i++) {
             current_piece = pieces_array[i];
             // for each piece
@@ -505,12 +505,11 @@ void board::optimise_move(int piece_index, int* score, std::string* ai_move, int
     // optimises the moves for this piece
     std::string best_move;
     int sum;
-    
     piece* current_piece = pieces_array[piece_index];
     std::vector<std::string> all_moves = current_piece->list_moves();
     for (size_t i{0}; i<all_moves.size(); i++) {
         sum = do_trial_move(piece_index,all_moves[i]);
-        if (sum < *score) {
+        if (sum <= *score) {
             // better move found
             *ai_move = convert_chess_notation(all_moves[i][0], all_moves[i][1]);
             *score = sum;
